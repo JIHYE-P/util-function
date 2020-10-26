@@ -14,8 +14,6 @@ const domtourFunc = (root) => {
     }else console.log(target)
   }
 };
-// domtourFunc(document.body);
-
 const domtourIterator = function * (root) { //제네레이터 
   const stack = [root];
   let target;
@@ -46,8 +44,8 @@ const domtourDFS = root => {
     }
   }
 }
-// domtourDFS(document.body);
 
+//
 const jsonBFS = (root) => {
   const stack = [root];
   let target;
@@ -58,7 +56,6 @@ const jsonBFS = (root) => {
     console.log(target);
   }
 };
-// jsonBFS(data);
 
 const jsonDFS = (root) => {
   const stack = [root];
@@ -68,9 +65,7 @@ const jsonDFS = (root) => {
     console.log(target)
   }
 };
-// jsonDFS(data);
 
-//BFS
 const traversalBFSIterator = function * (root){
   const stack = [root];
   let target;
@@ -78,7 +73,7 @@ const traversalBFSIterator = function * (root){
     stack.push(...yield target);
   }
 }
-//이터레이터 생성함수 DFS
+
 const traversalDFSIterator = function * (root){
   const stack = [root];
   let target;
@@ -86,7 +81,7 @@ const traversalDFSIterator = function * (root){
     stack.unshift(...yield target);
   }
 }
-//이터레이터 실행함수
+
 const tour = (generator, f)  => {
   let result = generator.next();
   while(!result.done){
@@ -100,7 +95,6 @@ const jsontour = (root, f) => {
     return typeof parentNode === 'object' ? Object.values(parentNode) : []
   });
 }
-// jsontour(data, v => console.log(v));
 
 const domtour = (root, f) => {
   tour(traversalDFSIterator(root), parentNode => {
@@ -108,60 +102,30 @@ const domtour = (root, f) => {
     return parentNode.childNodes
   });
 }
-// domtour(document.body, v => console.log(v));
 
 
-/**
- * secure: https 에서만 쿠키 사용
- * expires/max-age: 쿠키의 만료 시간 설정
- * expires date 객체
- * max-age 초 (3600 1시간)
- */
-
-// const setCookie = (name, value, options={}) => {
-//   options = {
-//     path: '/',
-//     ...options
-//   }
-//   const cookie = encodeURIComponent(name)+'='+encodeURIComponent(value)+';';
-//   const optionsValue = Object.keys(options).map(key => `${key}=${options[key]}`).join(';');
-//   const updatedCookie = cookie+optionsValue;
-
-//   document.cookie = updatedCookie;
-// }
-
-// setCookie('popup', 'close', {
-//   secure: true, 
-//   'max-age': 3600
-// });
-
-const setCookie = ({name, value, days}) => {
-  let expires = '';
-  if(days){
-    const date = new Date();
-    date.setTime(date.getTime() + (days*24*60*60*1000));
-    expires = date.toUTCString();
-  }else expires = '';
-
-  const cookie = encodeURIComponent(name)+'='+encodeURIComponent(value)+';';
-  const updatedCookie = cookie+'expires='+expires+';path=/;';
-  console.log(updatedCookie) 
-  document.cookie = updatedCookie;
-}
-
-setCookie({
-  name: 'popupClose',
-  value: 'today',
-  days: 1
-});
-
-const checkCookie = elementId => {
-  const cookiedata = document.cookie;
-  if(cookiedata.indexOf("popupClose=today") < 0){
-    document.getElementById(elementId).style.display = "block";
-  }else{
-    document.getElementById(elementId).style.display = "none";
+const dfs = function* (root){
+  const stack = [root];
+  let target;
+  while(target = stack.shift() || stack.length){
+    stack.unshift(...yield target);
+    console.log('dfs', target);
   }
 }
 
+const runIterator = (iterator, nextFunc) => {
+  let result;
+  let nextProps;  
+  while(!(result = iterator.next(nextProps)).done){
+    const {value} = result;
+    nextProps = nextFunc(value);
+  }
+}
 
+const createIteratorRunner = (iterator, nextFunc) => (root, f) => runIterator(iterator(root), target => {
+  f(target);
+  return nextFunc(target);
+});
+
+const dom = createIteratorRunner(dfs, el => el.childNodes);
+dom(document.body, value => console.log(value));
