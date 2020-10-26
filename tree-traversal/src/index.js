@@ -100,7 +100,7 @@ const jsontour = (root, f) => {
     return typeof parentNode === 'object' ? Object.values(parentNode) : []
   });
 }
-jsontour(data, v => console.log(v));
+// jsontour(data, v => console.log(v));
 
 const domtour = (root, f) => {
   tour(traversalDFSIterator(root), parentNode => {
@@ -108,7 +108,60 @@ const domtour = (root, f) => {
     return parentNode.childNodes
   });
 }
-domtour(document.body, v => console.log(v));
+// domtour(document.body, v => console.log(v));
 
+
+/**
+ * secure: https 에서만 쿠키 사용
+ * expires/max-age: 쿠키의 만료 시간 설정
+ * expires date 객체
+ * max-age 초 (3600 1시간)
+ */
+
+// const setCookie = (name, value, options={}) => {
+//   options = {
+//     path: '/',
+//     ...options
+//   }
+//   const cookie = encodeURIComponent(name)+'='+encodeURIComponent(value)+';';
+//   const optionsValue = Object.keys(options).map(key => `${key}=${options[key]}`).join(';');
+//   const updatedCookie = cookie+optionsValue;
+
+//   document.cookie = updatedCookie;
+// }
+
+// setCookie('popup', 'close', {
+//   secure: true, 
+//   'max-age': 3600
+// });
+
+const setCookie = ({name, value, days}) => {
+  let expires = '';
+  if(days){
+    const date = new Date();
+    date.setTime(date.getTime() + (days*24*60*60*1000));
+    expires = date.toUTCString();
+  }else expires = '';
+
+  const cookie = encodeURIComponent(name)+'='+encodeURIComponent(value)+';';
+  const updatedCookie = cookie+'expires='+expires+';path=/;';
+  console.log(updatedCookie) 
+  document.cookie = updatedCookie;
+}
+
+setCookie({
+  name: 'popupClose',
+  value: 'today',
+  days: 1
+});
+
+const checkCookie = elementId => {
+  const cookiedata = document.cookie;
+  if(cookiedata.indexOf("popupClose=today") < 0){
+    document.getElementById(elementId).style.display = "block";
+  }else{
+    document.getElementById(elementId).style.display = "none";
+  }
+}
 
 
