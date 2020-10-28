@@ -32,7 +32,7 @@ video {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #eee;
+  background: beige;
 }
 .title h1 {
   font-size: 110px;
