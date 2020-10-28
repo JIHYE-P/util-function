@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+}
+section {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+iframe {
+  border: 0;
+  width: 1920px;
+  height: 1080px;
+}
+video {
+  object-fit: fill;
+}
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #eee;
+}
+.title h1 {
+  font-size: 110px;
+}
