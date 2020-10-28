@@ -3,7 +3,7 @@ const initScene = scene => scene.el.style.transition = 'opacity 1s';
 const hideScene = scene => scene.el.style.opacity = 0;
 const showScene = scene => scene.el.style.opacity = 1;
 
-const loopShowScene = async({el, duration, video}) => {
+const sceneLoop = async({el, duration, video}) => {
   showScene({el});
   if(video) video.play();
   await sleep(duration);
@@ -20,7 +20,7 @@ const interstitial = async(scenes) => {
   let i = 0;
   while(true){
     const current = scenes[i++ % scenes.length];
-    current.el && await loopShowScene(current);
+    current.el && await sceneLoop(current);
   }
 }
 
