@@ -1,5 +1,5 @@
 const sleep = ms => new Promise(res => setTimeout(res, ms));
-const initScene = scene => scene.el.style.transition = 'opacity 1s';
+const transitionScene = scene => scene.el.style.transition = 'opacity 1s';
 const hideScene = scene => scene.el.style.opacity = 0;
 const showScene = scene => scene.el.style.opacity = 1;
 
@@ -15,7 +15,7 @@ const sceneLoop = async({el, duration, video}) => {
 }
 
 const interstitial = async(scenes) => {
-  scenes.filter(({el}) => el).forEach(initScene);
+  scenes.filter(({el}) => el).forEach(transitionScene);
   scenes.filter(({el}) => el).forEach(hideScene);
   let i = 0;
   while(true){
