@@ -19,8 +19,9 @@ export const timeParser = (strs, ...props) => strs.reduce((acc, val) => acc += (
 
 export const setCookie = (name, value, time) => {
   const now = new Date();
-  now.setTime(now.getTime() + time);
+  now.setTime(now.getTime() + timeParser`${time}`);
   const expires = now.toUTCString();
+
   const cookie = encodeURIComponent(name)+'='+encodeURIComponent(value)+';';
   const updatedCookie = time ? cookie+'expires='+expires+';path=/;' : cookie+'path=/;'
   document.cookie = updatedCookie;
@@ -36,7 +37,7 @@ export const checkCookie = (cookie, element) => {
     element.style.display = "none";
   }
 }
-const cookie = setCookie('popupClose', 'today', timeParser`1d 2h`);
+const cookie = setCookie('popupClose', 'today', '1d 2h');
 checkCookie(cookie, document.getElementById('app'))
 
 
