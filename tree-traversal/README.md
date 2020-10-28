@@ -1,6 +1,6 @@
-## DOM Tree 순회
+## Tree dom/json 순회하기
+DOM 엘리먼트, Json 등 부모-자식 계층을 순회하면서 모든 엘리먼트, json value를 얻을 수 있는 함수 만들기    
 
-DOM 엘리먼트, Json 등 부모-자식 계층 순회 함수
 #### **BFS(Breadth Frist Search) 방식**
 BFS 방식은 너비우선 탐색이다. 너비=층
 ```html
@@ -16,7 +16,7 @@ BFS 방식은 너비우선 탐색이다. 너비=층
 결과 ```[a, b, aa, bb, aaa, bbb]```
 
 #### **DFS(Breadth Frist Search) 방식**
-DFS 방식은 깊이우선 탐색이다. 
+DFS 방식은 깊이우선 탐색이다. 부모->자식
 ```html
 <div class="a">
   <div class="aa"></div>
@@ -73,7 +73,6 @@ const jsonDFS = root => {
   }
 }
 ```
-
 위 코드를 보면 BFS, DFS 방식의 함수를 보면 자식들을 스택 배열에 맨 앞에 추가하는지 `(unshift())`, 맨 뒤에 추가하는지`(push())`의 차이인걸 알 수 있다. 그리고 dom, json을 순회할 때의 차이점은 스택 배열에 추가되는 대상자만 다른걸 확인 할 수 있다.   
 
 ----
@@ -145,7 +144,6 @@ const createGeneratorRunner = (iterator, nextFunc) => (root, f) => runIterator(i
   return nextFunc(target);
 });
 ```
-
 위 3개의 함수로 순회하고 싶은 대상자와, 결과값으로 커스텀 함수를 각각 설정할 수 있다.
 ```js
 const domDFS = createGeneratorRunner(dfs, el => el.childNodes);
