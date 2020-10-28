@@ -1,131 +1,69 @@
-import data from '../data.json'
-/**
- * BFS 방식 - 너비우선탐색
- * 우선순위가 너비=층 이 된다는 것이 핵심이다.
- */
-const domtourFunc = (root) => {
+const domBfs = root => {
   const stack = [root];
   let target;
-  while ((target = stack.shift())) {
-    console.log(stack)
-    if (target.childNodes && target.childNodes.length) {
-      stack.push(...target.childNodes);
-      console.log(target)
-    }else console.log(target)
-  }
-};
-const domtourIterator = function * (root) { //제네레이터 
-  const stack = [root];
-  let target;
-  while ((target = stack.shift())) {
-    if (target.childNodes && target.childNodes.length) {
-      stack.push(...target.childNodes);
-      for(const el of [target]){
-        yield el;
-      }
-    } else yield target;
-  }
-};
-
-/**
- * DFS 방식 - 깊이우선탐색
- */
-const domtourDFS = root => {
-  const stack = [root];
-  let target;
-  while(target = stack.shift()){
-    if(target.childNodes && target.childNodes.length){
-      stack.unshift(...target.childNodes);
-      for(const el of [target]){
-        console.log(el);
-      }
-    }else{
-      console.log(target);
-    }
-  }
-}
-
-//
-const jsonBFS = (root) => {
-  const stack = [root];
-  let target;
-  debugger;
   while(target = stack.shift() || stack.length){
-    stack.push(...(typeof target === 'object' ? Object.values(target) : []));
-    debugger;
+    stack.push(...target.childNodes);
     console.log(target);
   }
-};
-
-const jsonDFS = (root) => {
+}
+const domDfs = root => {
   const stack = [root];
   let target;
   while(target = stack.shift() || stack.length){
-    stack.unshift(...(typeof target === 'object' ? Object.values(target) : []));
-    console.log(target)
+    stack.unshift(...target.childNodes);
+    console.log(target);
   }
-};
+} 
+const jsonBfs = root => {
+  const stack = [root];
+  let target;
+  while(target = stack.shift() || stack.length){
+    stack.push(typeof target === 'object' ? Object.values(target) : []);
+    console.log(target);
+  }
+}
+const jsonDfs = root => {
+  const stack = [root];
+  let target;
+  while(target = stack.shift() || stack.length){
+    stack.unshift(typeof target === 'object' ? Object.values(target) : []);
+    console.log(target);
+  }
+}
+// DFS, BFS의 차이는 순회하는 상대를 배열 맨 앞에 저장하느냐 맨 뒤에 저장하느냐의 차이
+// DOM, JSON의 차이는 배열에 추가되는 대상이 자식 엘리먼트 배열인지, 오브젝트 값의 배열인지의 차이이다
 
-const traversalBFSIterator = function * (root){
+// 제너레이터
+const bfs = function* (root){
   const stack = [root];
   let target;
   while(target = stack.shift() || stack.length){
     stack.push(...yield target);
   }
 }
-
-const traversalDFSIterator = function * (root){
-  const stack = [root];
-  let target;
-  while(target = stack.shift() || stack.length){
-    stack.unshift(...yield target);
-  }
-}
-
-const tour = (generator, f)  => {
-  let result = generator.next();
-  while(!result.done){
-    result = generator.next(f(result.value));
-  }
-}
-
-const jsontour = (root, f) => {
-  tour(traversalDFSIterator(root), parentNode => {
-    f(parentNode);
-    return typeof parentNode === 'object' ? Object.values(parentNode) : []
-  });
-}
-
-const domtour = (root, f) => {
-  tour(traversalDFSIterator(root), parentNode => {
-    f(parentNode);
-    return parentNode.childNodes
-  });
-}
-
-
 const dfs = function* (root){
   const stack = [root];
   let target;
   while(target = stack.shift() || stack.length){
     stack.unshift(...yield target);
-    console.log('dfs', target);
   }
 }
-
-const runIterator = (iterator, nextFunc) => {
+const runIterator = (iterator, f) => {
   let result;
-  let nextProps;  
+  let nextProps;
   while(!(result = iterator.next(nextProps)).done){
     const {value} = result;
-    nextProps = nextFunc(value);
+    nextProps = f(value);
   }
 }
-
 const createIteratorRunner = (iterator, nextFunc) => (root, f) => runIterator(iterator(root), target => {
   f(target);
   return nextFunc(target);
 });
 
-const dom = createIteratorRunner(dfs, el => el.childNodes);
-dom(document.body, value => console.log(value));
+const domdfs = createIteratorRunner(dfs, el => el.childNodes);
+const jsonbfs = createIteratorRunner(bfs, obj => typeof obj === 'object' ? Object.values(obj) : []);
+domBfs(document.body, console.log);
+jsonbfs({name: 'jihye', age: '0', family: {one: 'a', two: 'b', three: 'c'}}, console.log);
+
+
