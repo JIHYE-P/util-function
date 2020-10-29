@@ -5,7 +5,7 @@
  * expires는 date 객체
  * max-age는 초 단위(3600 1시간)
  */
-
+// const timeParser = (strs, ...props) => strs.reduce((acc, val, idx) => acc += (props.shift() ?? '') + val).split(' ');
 export const timeParser = (strs, ...props) => strs.reduce((acc, val) => acc += (props.shift() ?? '') + val).split(' ').map(str => {
   const value = Number(str.slice(0, -1));
   switch (str.slice(-1)) {
