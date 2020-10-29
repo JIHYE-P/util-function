@@ -1,3 +1,13 @@
+# Util Functions
+```
+1. view-interstital - 화면 전환 애니메이션 무한루프
+2. tree-traversal - 트리구조 (dom, json) 순회
+3. time-function - 타이머 기능
+4. popup-cookie - 팝업 오늘하루그만보기 구현
+5. pipe-function
+6. currying
+```
+
 ## Tagged Template Literals
 자바스크립트에서 문자열을 다룰 때 `Template Literals` ``(백틱)을 사용하여 문자열에 변수 값을 손쉽게 합칠 수 있다. 
 ```js

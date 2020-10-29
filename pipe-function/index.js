@@ -13,7 +13,7 @@ pipe(
     return v+1000
   },
 )(100);
-  
+
 const sleep = ms => new Promise(res => setTimeout(res, ms));
 const pipeAsync = (...fs) => async(props) => fs.reduce(async(acc, f) => f(await acc), Promise.resolve(props));
 await pipeAsync(
