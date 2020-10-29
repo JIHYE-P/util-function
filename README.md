@@ -48,7 +48,7 @@ const timeParser = (string, ...props) => string.reduce((acc, val) => acc += (pro
   case 's': return value*1000;
   }
 }).reduce((acc, val) => acc+=val);
-timeParser`1d 2h 10m 30s` //1일 2시간 10분 30초를 밀리초 숫자 값으로 반환된다.
+timeParser`1d 2h 10m 30s` //1일 2시간 10분 30초를 밀리초단위 숫자 값으로 반환된다.
 ```
 
 

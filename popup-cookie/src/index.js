@@ -39,7 +39,3 @@ export const checkCookie = (cookie, element) => {
 }
 const cookie = setCookie('popupClose', 'today', '1d 2h');
 checkCookie(cookie, document.getElementById('app'))
-
-
-
-
