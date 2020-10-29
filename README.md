@@ -8,6 +8,8 @@
 6. currying
 ```
 
+-----
+
 ## Tagged Template Literals
 자바스크립트에서 문자열을 다룰 때 `Template Literals` ``(백틱)을 사용하여 문자열에 변수 값을 손쉽게 합칠 수 있다. 
 ```js
