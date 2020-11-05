@@ -6,6 +6,7 @@
 4. popup-cookie - 팝업 오늘하루그만보기 구현
 5. pipe-function
 6. currying
+7. using-fetch
 ```
 
 -----
