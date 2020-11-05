@@ -5,7 +5,10 @@ const showScene = scene => scene.el.style.opacity = 1;
 
 const sceneLoop = async({el, duration, video}) => {
   showScene({el});
-  if(video) video.play();
+  if(video) {
+    item.currentTime = 0;
+    video.play();
+  }
   await sleep(duration);
   hideScene({el});
   if(video){
@@ -24,17 +27,7 @@ const interstitial = async(scenes) => {
   }
 }
 
-const $ = document.querySelector.bind(document);
-const scenes = [
-  {el: $('.video1'), duration: 5000, video: $('.video1 video')},
-  {el: $('.video2'), duration: 5000, video: $('.video2 video')},
-  {el: $('.title'), duration: 5000}
-]
-interstitial(scenes);
-
-
 //재귀함수
-/*
 let i = 0;
 const loop = async() => {
   const current = scenes[i++ % scenes.length];
@@ -52,5 +45,12 @@ const loop = async() => {
   }
 }
 loop();
-*/
+
+const $ = document.querySelector.bind(document);
+const scenes = [
+  {el: $('.video1'), duration: 5000, video: $('.video1 video')},
+  {el: $('.video2'), duration: 5000, video: $('.video2 video')},
+  {el: $('.title'), duration: 5000}
+]
+interstitial(scenes);
 
