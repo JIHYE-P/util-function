@@ -85,6 +85,16 @@ const interstitial = async(scenes) => {
 }
 ``` 
 
+> 비디오 크기가 너무 커서 송출하면 버벅거리는 현상발견.
+
+비디오가 최초에 로드가 끝나면 다음 재생될 때 캐시가 되어 불러들이면 안되는데, 비디오가 실행될 때마다 캐시를 지우고 다시 불러들이는 문제점 발생.     
+비디오 링크를 Object URL (Blob url)로 만들어서 적용하면 캐시를 지우지 않고 계속 갖고있는다.     
+
+## 비디오 파일 Object URL로 적용
+> 링크 참고
+* [Using Fetch 사용법](https://developer.mozilla.org/ko/docs/Web/API/Fetch_API/Fetch%EC%9D%98_%EC%82%AC%EC%9A%A9%EB%B2%95)
+* [Fetch: Download progress 사용법](https://ko.javascript.info/fetch-progress)
+
 
 
 
