@@ -1,0 +1,17 @@
+{
+  "name": "build-tree-object",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "esbuild": "^0.12.15"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "esbuild ./src/index.ts --watch --bundle --outfile=dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
